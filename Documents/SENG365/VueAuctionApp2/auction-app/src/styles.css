@@ -1,0 +1,63 @@
+.container {
+  margin: auto;
+}
+
+.heading {
+  margin: auto;
+  width: 80%;
+  height: 15%;
+  background-color: cornflowerblue;
+}
+.navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation li {
+  display: inline;
+  width: 150px;
+  height: 40px;
+  background-color: antiquewhite;
+  color: white;
+}
+
+.navigation li router-link:active {
+  background-color: aliceblue;
+  textcolor: black;
+}
+
+.dropbtn {
+  background-color: antiquewhite;
+  color: white;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.dropbtn:hover {
+  background-color: aliceblue;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: antiquewhite;
+  min-width: 150px;
+  z-index: 1;
+}
+
+.searchSection {
+  background-color: antiquewhite;
+}
+
+#siteheading {
+  text-align: center;
+}
+
+
