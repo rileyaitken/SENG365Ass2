@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import App from './App.vue';
 import Home from './Home.vue';
-/*import ViewAuction from './ViewAuction.vue';
-import Register from './Register.vue';
+import ViewAuction from './ViewAuction.vue';
+/*import Register from './Register.vue';
 import CreateAuction from './CreateAuction.vue';*/
 
 import VueRouter from 'vue-router';
@@ -18,13 +18,12 @@ const vue_routes = [
     path: "/",
     component: Home,
     name: "Home"
+  },
+  {
+    path: "/auction",
+    component: ViewAuction,
+    name: "auction"
   }
-  //,
-  // {
-  //     path: "/auction",
-  //     component: ViewAuction,
-  //     name: "auction"
-  // }
   // },
   // {
   //     path: "/login",

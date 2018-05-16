@@ -9,7 +9,7 @@
 				<li>
 					<div class="dropdown">
 						<button onclick="showMyETrade()" class="dropbtn">My E-Trade</button>
-						<div id="accDetails" class="dropdown-content">
+						<div v-model="dropdown" class="dropdown-content">
 							<router-link :to="{ name: 'mycurrentauctions'}">My Current Auctions</router-link>
 							<router-link :to="{ name: 'mysoldauctions'}">My Sold Auctions</router-link>
 							<router-link :to="{ name: 'myexpiredauctions'}">My Expired Auctions</router-link>
@@ -127,12 +127,8 @@
 
 		</div>
 
-		<div id="auctions">
-			<table>
-				<tr v-for="auction in auctions">
-					<td>{{ auction[0] }}</td>
-				</tr>
-			</table>
+		<div id="auctions" v-for="auction in auctions">
+      <router-link to:="{ name: 'auction', params: { auctionId: auction[1]}}">{{ auction[0] }}</router-link>
 		</div>
 
 	</div>
@@ -156,15 +152,37 @@
 				lastName: "",
 				isLoggedIn: false,
 				showUser: "",
+        dropdown: null
 			}
 		},
 
 		mounted: function() {
+		  this.resetDb();
 			this.getCategories();
 			this.getAuctions();
 		},
 
 		methods: {
+
+		  resetDb: function () {
+		    this.$http.post("http://localhost:4941/api/v1/reset")
+          .then(function (response) {
+            console.log("Reset database");
+          }, function (error) {
+            console.log(error);
+          });
+
+		    this.$http.post("http://localhost:4941/api/v1/resample")
+          .then(function (response) {
+            console.log("Resampled database");
+          }, function (error) {
+            console.log(error);
+          });
+      },
+
+		  showMyETrade: function () {
+		     this.dropdown.classList.toggle("show");
+      },
 
 			getAuctions: function() {
 				this.auctions = [];
@@ -202,7 +220,7 @@
 					.then(function (response) {
 						console.log("Got auctions");
 						for (var i = 0; i < response.data.length; i++) {
-							let auction = [response.data[i].title];
+							let auction = [response.data[i].title, response.data[i].id]];
 							this.$http.get("http://localhost:4941/api/v1/auctions/" + response.data[i].id + "/photos")
 								.then(function (photo_response) {
 									auction.push(photo_response);
