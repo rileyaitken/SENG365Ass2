@@ -1,26 +1,6 @@
 <template>
 	<div class="container">
 
-		<div class="navigation">
-			<ul>
-				<li><router-link :to="{ name: 'Home'}">Home - View Auctions</router-link></li>
-				<li><router-link :to="{ name: 'createauction'}">List Auction</router-link></li>
-				<li><router-link :to="{ name: 'register'}">Create Account</router-link></li>
-				<li>
-					<div class="dropdown">
-						<button onclick="showMyETrade()" class="dropbtn">My E-Trade</button>
-						<div v-model="dropdown" class="dropdown-content">
-							<router-link :to="{ name: 'mycurrentauctions'}">My Current Auctions</router-link>
-							<router-link :to="{ name: 'mysoldauctions'}">My Sold Auctions</router-link>
-							<router-link :to="{ name: 'myexpiredauctions'}">My Expired Auctions</router-link>
-							<router-link :to="{ name: 'mycurrentbids'}">My Current Bids</router-link>
-							<router-link :to="{ name: 'mywonauctions'}">My Won Auctions</router-link>
-						</div>
-					</div>
-				</li>
-			</ul>
-		</div>
-
 		<div class="searchSection">
 			<form id="searchbox" align="left" v-on:submit="getAuctions()">
 				<input v-model="q" placeholder="Title" />
@@ -51,7 +31,7 @@
 		</div>
 
 		<div v-if="isLoggedIn">
-			You are logged in as {{ this.showUser }}
+			You are logged in.
 			<button type="button" v-on:click="logout()" value="Logout">Logout</button>
 		</div>
 
@@ -74,7 +54,7 @@
                   Username: <input type="text" v-model="username" name="username" value="Enter username"><br>
                   Email:      <input type="text" v-model="email" name="email" value="Enter email"><br>
                   Password: <input type="password" v-model="password" name="password" value="Enter password"><br>
-                  <button type="button" v-on:click="validateLogin()" value="Login" data-dismiss="modal">Login</button>
+                  <button type="button" v-on:click="validateLogin()" value="Login">Login</button>
                   <div class="alert alert-success alert-dismissable fade" role="alert">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">Close</button>
                     <strong>Login successful</strong>
@@ -109,13 +89,13 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<form id="registerForm" v-on:submit="validateRegister()">
+							<form id="registerForm" >
 								First name: <input type="text" v-model="firstName" name="regFName"><br>
 								Last name: <input type="text" v-model="lastName" name="regLName"><br>
 								Username: <input type="text" v-model="username" name="username" value="Enter username"><br>
 								Email: <input type="text" v-model="email" name="email" value="Enter email"><br>
 								Password: <input type="password" v-model="password" name="password" value="Enter password"><br>
-								<input type="submit" value="Login" />
+								<input type="button" v-on:click="validateRegister()" value="Register" />
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -127,8 +107,9 @@
 
 		</div>
 
-		<div id="auctions" v-for="auction in auctions">
-      <router-link to:="{ name: 'auction', params: { auctionId: auction[1]}}">{{ auction[0] }}</router-link>
+		<div class="auctions" v-for="auction in auctions">
+      <img :src="'http://localhost:4941/api/v1/auctions/' + auction[1] + '/photos'">
+      <router-link :to="{ name: 'auction', params: { auctionId: auction[1]}}">{{ auction[0] }}</router-link>
 		</div>
 
 	</div>
@@ -152,36 +133,35 @@
 				lastName: "",
 				isLoggedIn: false,
 				showUser: "",
-        dropdown: null
+        showDropdown: false
 			}
 		},
 
 		mounted: function() {
-		  this.resetDb();
 			this.getCategories();
 			this.getAuctions();
 		},
 
 		methods: {
 
-		  resetDb: function () {
+		  /*resetDb: function () {
 		    this.$http.post("http://localhost:4941/api/v1/reset")
           .then(function (response) {
             console.log("Reset database");
           }, function (error) {
             console.log(error);
-          });
+          });*/
 
-		    this.$http.post("http://localhost:4941/api/v1/resample")
+		   /* this.$http.post("http://localhost:4941/api/v1/resample")
           .then(function (response) {
             console.log("Resampled database");
           }, function (error) {
             console.log(error);
           });
-      },
+      },*/
 
 		  showMyETrade: function () {
-		     this.dropdown.classList.toggle("show");
+		     this.showDropdown = !this.showDropdown;
       },
 
 			getAuctions: function() {
@@ -220,13 +200,7 @@
 					.then(function (response) {
 						console.log("Got auctions");
 						for (var i = 0; i < response.data.length; i++) {
-							let auction = [response.data[i].title, response.data[i].id]];
-							this.$http.get("http://localhost:4941/api/v1/auctions/" + response.data[i].id + "/photos")
-								.then(function (photo_response) {
-									auction.push(photo_response);
-								}, function (error) {
-									console.log(error);
-								});
+							let auction = [response.data[i].title, response.data[i].id];
 							this.auctions.push(auction);
 						}
 					}, function (error) {

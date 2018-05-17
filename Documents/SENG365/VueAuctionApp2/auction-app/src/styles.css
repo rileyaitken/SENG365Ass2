@@ -64,4 +64,12 @@
   text-align: center;
 }
 
+.auctions img {
+  width: 100px;
+  height: 100px;
+}
 
+.auctionInfo img {
+  width: 100px;
+  height: 100px;
+}
