@@ -4,7 +4,7 @@ import Home from './Home.vue';
 import ViewAuction from './ViewAuction.vue';
 /*import Register from './Register.vue';*/
 import CreateAuction from './CreateAuction.vue';
-
+import EditAuction from './EditAuction.vue';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 
@@ -28,6 +28,11 @@ const vue_routes = [
     path: "/createauction",
     component: CreateAuction,
     name: "createauction"
+  },
+  {
+    path: "/editauction",
+    component: EditAuction,
+    name: "editauction"
   }
 ];
 

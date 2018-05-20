@@ -73,3 +73,21 @@
   width: 100px;
   height: 100px;
 }
+
+.footer {
+  margin: auto;
+  width: 80%;
+  height: 15%;
+  background-color: cornflowerblue;
+}
+
+.loginSection {
+  margin: auto;
+  align-content: right;
+}
+
+.viewBatches #button {
+  display: inline-block;
+}
+
+
