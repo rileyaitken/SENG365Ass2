@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div>
 
 		<div class="searchSection">
 			   <form id="searchbox" align="left" v-on:submit="getAuctions()">
@@ -34,13 +34,15 @@
     <br>
 
     <div class="auctions" v-for="auction in auctions[currentBatch]">
-      <img :src="'http://localhost:4941/api/v1/auctions/' + auction.id + '/photos'">
+      <router-link :to="{ name: 'auction', params: { auctionId: auction.id}}"><img :src="'http://localhost:4941/api/v1/auctions/' + auction.id + '/photos'"></router-link>
       <router-link :to="{ name: 'auction', params: { auctionId: auction.id}}">{{ auction.title }}  </router-link>
       <br><br>
     </div>
 
     <div class="viewBatches" v-for="batch in numberOfBatches">
-      <button id="button" type="button" v-on:click="updateBatchNo(batch)" :value=batch>{{ batch }}</button>
+      <ul>
+        <li><button id="button" type="button" v-on:click="updateBatchNo(batch)" :value=batch>{{ batch }}</button></li>
+      </ul>
     </div>
 
 	</div>
@@ -64,20 +66,7 @@
 
 		mounted: function() {
 			this.getCategories();
-			console.log(this.$route.params);
-			if (this.$route.params.myCurrent === true) {
-			  this.getMyAuctions();
-      } else if (this.$route.params.mySold === true) {
-			  this.getMySoldAuctions();
-      } else if (this.$route.params.myBids === true) {
-			  this.getMyAuctionBids();
-      } else if (this.$route.params.myExpired === true) {
-			  this.getMyExpired();
-      } else if (this.$route.params.myWon == true) {
-			  this.getMyWonAuctions();
-      } else {
-			  this.getAuctions();
-      }
+      this.getAuctions();
 		},
 
 		methods: {
@@ -97,139 +86,6 @@
             console.log(error);
           });
       },*/
-
-      getMyAuctions: function() {
-        this.auctions = [];
-        this.numberOfBatches = [];
-        let queryParams = "?status=active&seller=" + localStorage.getItem("userId");
-        this.$http.get("http://localhost:4941/api/v1/auctions" + queryParams)
-          .then(function (response) {
-            let numBatches = response.data.length / 5;
-            for (var i = 0; i < numBatches; i++) {
-              this.auctions.push([]);
-              this.numberOfBatches.push(i);
-            }
-            let batchNo = 0;
-            for (var i = 0; i < response.data.length; i++) {
-              if (i % 5 === 0 && i !== 0) {
-                batchNo++;
-              }
-              this.auctions[batchNo].push(response.data[i]);
-            }
-          }, function (error) {
-            console.log("Got error");
-            console.log(error);
-          });
-        console.log(this.auctions);
-      },
-
-      getMyExpired: function() {
-        this.auctions = [];
-        this.numberOfBatches = [];
-        let queryParams = "?status=expired&seller=" + localStorage.getItem("userId");
-        this.$http.get("http://localhost:4941/api/v1/auctions" + queryParams)
-          .then(function (response) {
-            let numBatches = response.data.length / 5;
-            for (var i = 0; i < numBatches; i++) {
-              this.auctions.push([]);
-              this.numberOfBatches.push(i);
-            }
-            let batchNo = 0;
-            for (var i = 0; i < response.data.length; i++) {
-              if (i % 5 === 0 && i !== 0) {
-                batchNo++;
-              }
-              this.auctions[batchNo].push(response.data[i]);
-              console.log(batchNo);
-            }
-            console.log(this.auctions[0])
-          }, function (error) {
-            console.log("Got error");
-            console.log(error);
-          });
-        console.log(this.auctions);
-      },
-
-      getMyAuctionBids: function() {
-        this.auctions = [];
-        this.numberOfBatches = [];
-        let queryParams = "?status=active&bidder=" + localStorage.getItem("userId");
-        this.$http.get("http://localhost:4941/api/v1/auctions" + queryParams)
-          .then(function (response) {
-            let numBatches = response.data.length / 5;
-            for (var i = 0; i < numBatches; i++) {
-              this.auctions.push([]);
-              this.numberOfBatches.push(i);
-            }
-            let batchNo = 0;
-            for (var i = 0; i < response.data.length; i++) {
-              if (i % 5 === 0 && i !== 0) {
-                batchNo++;
-              }
-              this.auctions[batchNo].push(response.data[i]);
-              console.log(batchNo);
-            }
-            console.log(this.auctions[0])
-          }, function (error) {
-            console.log("Got error");
-            console.log(error);
-          });
-        console.log(this.auctions);
-      },
-
-      getMySoldAuctions: function() {
-        this.auctions = [];
-        this.numberOfBatches = [];
-        let queryParams = "?status=won&seller=" + localStorage.getItem("userId");
-        this.$http.get("http://localhost:4941/api/v1/auctions" + queryParams)
-          .then(function (response) {
-            let numBatches = response.data.length / 5;
-            for (var i = 0; i < numBatches; i++) {
-              this.auctions.push([]);
-              this.numberOfBatches.push(i);
-            }
-            let batchNo = 0;
-            for (var i = 0; i < response.data.length; i++) {
-              if (i % 5 === 0 && i !== 0) {
-                batchNo++;
-              }
-              this.auctions[batchNo].push(response.data[i]);
-              console.log(batchNo);
-            }
-            console.log(this.auctions[0])
-          }, function (error) {
-            console.log("Got error");
-            console.log(error);
-          });
-        console.log(this.auctions);
-      },
-
-      getMyWonAuctions: function() {
-        this.auctions = [];
-        this.numberOfBatches = [];
-        let queryParams = "?status=won&winner=" + localStorage.getItem("userId");
-        this.$http.get("http://localhost:4941/api/v1/auctions" + queryParams)
-          .then(function (response) {
-            let numBatches = response.data.length / 5;
-            for (var i = 0; i < numBatches; i++) {
-              this.auctions.push([]);
-              this.numberOfBatches.push(i);
-            }
-            let batchNo = 0;
-            for (var i = 0; i < response.data.length; i++) {
-              if (i % 5 === 0 && i !== 0) {
-                batchNo++;
-              }
-              this.auctions[batchNo].push(response.data[i]);
-              console.log(batchNo);
-            }
-            console.log(this.auctions[0])
-          }, function (error) {
-            console.log("Got error");
-            console.log(error);
-          });
-        console.log(this.auctions);
-      },
 
 			getAuctions: function() {
 				this.auctions = [];

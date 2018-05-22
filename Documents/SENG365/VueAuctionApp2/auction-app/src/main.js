@@ -2,9 +2,13 @@ import Vue from 'vue';
 import App from './App.vue';
 import Home from './Home.vue';
 import ViewAuction from './ViewAuction.vue';
-/*import Register from './Register.vue';*/
 import CreateAuction from './CreateAuction.vue';
 import EditAuction from './EditAuction.vue';
+import MyCurrentAuctions from './MyCurrentAuctions.vue';
+import MySoldAuctions from './MySoldAuctions.vue';
+import MyCurrentBids from './MyCurrentBids.vue';
+import MyExpiredAuctions from './MyExpiredAuctions.vue';
+import MyWonAuctions from './MyWonAuctions.vue';
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 
@@ -33,6 +37,31 @@ const vue_routes = [
     path: "/editauction",
     component: EditAuction,
     name: "editauction"
+  },
+  {
+    path: '/mycurrentauctions',
+    component: MyCurrentAuctions,
+    name: 'mycurrentauctions'
+  },
+  {
+    path: '/myexpiredauctions',
+    component: MyExpiredAuctions,
+    name: 'myexpiredauctions'
+  },
+  {
+    path: '/mywonauctions',
+    component: MyWonAuctions,
+    name: 'mywonauctions'
+  },
+  {
+    path: '/mysoldauctions',
+    component: MySoldAuctions,
+    name: 'mysoldauctions'
+  },
+  {
+    path: '/mycurrentbids',
+    component: MyCurrentBids,
+    name: 'mycurrentbids'
   }
 ];
 

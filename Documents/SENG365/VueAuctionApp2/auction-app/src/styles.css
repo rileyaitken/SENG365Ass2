@@ -1,35 +1,62 @@
 .container {
   margin: auto;
+  background-color: bisque;
+  border-style: groove;
 }
 
 .heading {
+  border-style: border;
   margin: auto;
-  width: 80%;
-  height: 15%;
-  background-color: cornflowerblue;
+  width: 95%;
+  background-color: gainsboro;
 }
+
+.navigation {
+  margin: auto;
+  width: 95%;
+}
+
 .navigation ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: auto;
+  padding: 5px;
 }
 
 .navigation li {
+  margin: auto;
   display: inline;
-  width: 150px;
-  height: 40px;
-  background-color: antiquewhite;
-  color: white;
+  width: 200px;
+  height: 200px;
+  color: black;
 }
 
-.navigation li router-link:active {
+.navigation button {
+  position: relative;
+  display: inline-block;
+  color: black;
+  padding: 7px;
+}
+
+.navigation button:hover {
+  background-color: aliceblue;
+  color: black;
+}
+
+.navigation li:active {
   background-color: aliceblue;
   textcolor: black;
 }
 
+.loginSection {
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  padding: 10px;
+}
+
 .dropbtn {
   background-color: antiquewhite;
-  color: white;
+  color: black;
   width: 150px;
   height: 40px;
   cursor: pointer;
@@ -47,7 +74,8 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: antiquewhite;
+  text-align: center;
+  background-color: beige;
   min-width: 150px;
   z-index: 1;
 }
@@ -57,10 +85,18 @@
 }
 
 .searchSection {
-  background-color: antiquewhite;
+  border-style: groove;
+  background-color: gainsboro;
+  margin: auto;
+  padding: 5px;
+  width: 95%;
 }
 
 #siteheading {
+  text-align: center;
+}
+
+#siteinfo {
   text-align: center;
 }
 
@@ -77,17 +113,38 @@
 .footer {
   margin: auto;
   width: 80%;
-  height: 15%;
-  background-color: cornflowerblue;
+  background-color: gainsboro;
 }
 
 .loginSection {
-  margin: auto;
-  align-content: right;
+  align: right;
 }
 
-.viewBatches #button {
-  display: inline-block;
+.viewBatches ul {
+  list-style-type: none;
+  margin: 10px;
+  padding: 0;
+}
+
+.viewBatches li {
+  display: inline;
+  width: 150px;
+  height: 40px;
+  background-color: antiquewhite;
+  color: black;
+}
+
+#createAuction ul {
+  list-style-type: none;
+  margin: 0px;
+}
+
+.auctionInfo {
+  margin: auto;
+}
+
+.modal fade {
+
 }
 
 
