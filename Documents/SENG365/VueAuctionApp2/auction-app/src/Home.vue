@@ -34,16 +34,17 @@
     <br>
 
     <div class="auctions" v-for="auction in auctions[currentBatch]">
-      <router-link :to="{ name: 'auction', params: { auctionId: auction.id}}"><img :src="'http://localhost:4941/api/v1/auctions/' + auction.id + '/photos'"></router-link>
+      <router-link :to="{ name: 'auction', params: { auctionId: auction.id}}"><img :src="'http://localhost:4941/api/v1/auctions/' + auction.id + '/photos'" class="img-thumbnail" height="100px" width="100px"></router-link>
       <router-link :to="{ name: 'auction', params: { auctionId: auction.id}}">{{ auction.title }}  </router-link>
       <br><br>
     </div>
 
-    <div class="viewBatches" v-for="batch in numberOfBatches">
-      <ul>
-        <li><button id="button" type="button" v-on:click="updateBatchNo(batch)" :value=batch>{{ batch }}</button></li>
-      </ul>
-    </div>
+    <ul class="pagination">
+      <div v-for="batch in numberOfBatches">
+          <li><a v-on:click="updateBatchNo(batch)" :value=batch>{{ batch }}</a></li>
+      </div>
+    </ul>
+
 
 	</div>
 

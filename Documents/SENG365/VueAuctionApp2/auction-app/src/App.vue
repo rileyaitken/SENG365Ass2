@@ -1,25 +1,26 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container-fluid">
       <header>
         <div class="heading">
           <h1 id="siteheading">eTrade: Buy and Sell</h1>
         </div>
 
-        <div class="navigation">
+        <nav class="navigation">
           <ul>
             <li><button type="button"><router-link :to="{ name: 'Home'}">Home - View Auctions</router-link></button></li>
             <li v-if="isLoggedIn"><button type="button"><router-link :to="{ name: 'createauction'}">List Auction</router-link></button></li>
             <li v-if="isLoggedIn">
               <div class="dropdown">
-                <button v-on:click="showMyETrade()" class="dropbtn">My E-Trade</button>
-                <div v-bind:class="[showDropdown ? 'show' : '', 'dropdown-content']">
-                  <router-link :to="{ name: 'mycurrentauctions'}">My Current Auctions</router-link><br>
-                  <router-link :to="{ name: 'mysoldauctions'}">My Sold Auctions</router-link><br>
-                  <router-link :to="{ name: 'myexpiredauctions'}">My Expired Auctions</router-link><br>
-                  <router-link :to="{ name: 'mycurrentbids'}">My Current Bids</router-link><br>
-                  <router-link :to="{ name: 'mywonauctions'}">My Won Auctions</router-link><br>
-                </div>
+                <button v-on:click="showMyETrade()" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">My E-Trade
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><router-link :to="{ name: 'mycurrentauctions'}">My Current Auctions</router-link></li>
+                  <li><router-link :to="{ name: 'mysoldauctions'}">My Sold Auctions</router-link></li>
+                  <li><router-link :to="{ name: 'myexpiredauctions'}">My Expired Auctions</router-link></li>
+                  <li><router-link :to="{ name: 'mycurrentbids'}">My Current Bids</router-link></li>
+                  <li><router-link :to="{ name: 'mywonauctions'}">My Won Auctions</router-link></li>
+                </ul>
               </div>
             </li>
             <li><div class="loginSection">
@@ -75,12 +76,15 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form id="loginForm">
-                          Username: <input type="text" v-model="username" name="username" value="Enter username"><br>
-                          Email:      <input type="text" v-model="email" name="email" value="Enter email"><br>
-                          Password: <input type="password" v-model="password" name="password" value="Enter password"><br><br>
-                          <button type="button" v-on:click="validateLogin()" value="Login" data-dismiss="modal">Login</button>
-                        </form>
+                        <div class="form-group">
+                          <form>
+                            Username: <input type="text" v-model="username" class="form-control" name="username" value="Enter username"><br>
+                            Email:      <input type="text" v-model="email" class="form-control" name="email" value="Enter email"><br>
+                            Password: <input type="password" v-model="password" class="form-control" name="password" value="Enter password"><br><br>
+                            <button type="button" class="btn btn-default" v-on:click="validateLogin()" value="Login">Login</button>
+
+                          </form>
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <button class="btn btn-closelogin" data-dismiss="modal">Close login view</button>
@@ -100,11 +104,11 @@
                       </div>
                       <div class="modal-body">
                         <form id="registerForm" >
-                          First name: <input type="text" v-model="firstName" name="regFName"><br>
-                          Last name: <input type="text" v-model="lastName" name="regLName"><br>
-                          Username: <input type="text" v-model="username" name="username" value="Enter username"><br>
-                          Email: <input type="text" v-model="email" name="email" value="Enter email"><br>
-                          Password: <input type="password" v-model="password" name="password" value="Enter password"><br>
+                          First name: <input type="text" class="form-control" v-model="firstName" name="regFName"><br>
+                          Last name: <input type="text" class="form-control" v-model="lastName" name="regLName"><br>
+                          Username: <input type="text" class="form-control" v-model="username" name="username" value="Enter username"><br>
+                          Email: <input type="text" class="form-control" v-model="email" name="email" value="Enter email"><br>
+                          Password: <input type="password" class="form-control" v-model="password" name="password" value="Enter password"><br>
                           <input type="button" v-on:click="validateRegister()" value="Register" data-dismiss="modal"/>
                         </form>
                       </div>
@@ -118,7 +122,7 @@
               </div>
             </div></li>
           </ul>
-        </div>
+        </nav>
 
 
 

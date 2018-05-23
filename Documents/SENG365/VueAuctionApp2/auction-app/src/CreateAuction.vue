@@ -17,25 +17,25 @@
 
     <br>
 
-    <div class="createForm">
-      <form id="createAuction">
+    <div class="form-group">
+      <form>
         <ul>
-          <li>Title: <input type="text" v-model="title" required></li><br>
-          <li>Description: <input type="text" v-model="description" required></li><br>
+          <li>Title: <input class="form-control" type="text" v-model="title" required></li><br>
+          <li>Description: <input class="form-control" type="text" v-model="description" required></li><br>
           <li>Choose a category:
-          <select v-model="category" required>
+          <select v-model="category" class="form-control" required>
             <option selected="selected">{{ categories[0].categoryTitle }}</option>
             <option>{{ categories[1].categoryTitle }}</option>
             <option>{{ categories[2].categoryTitle }}</option>
             <option>{{ categories[3].categoryTitle }}</option>
             <option>{{ categories[4].categoryTitle }}</option>
           </select></li><br>
-          <li>Auction start date: <input type="date" v-model="startDate" required></li><br>
-          <li>Auction start time: <input type="time" v-model="startTime" required></li><br>
-          <li>Auction end date: <input type="date" v-model="endDate" required></li><br>
-          <li>Auction end time: <input type="time" v-model="endTime" required></li><br>
-          <li>Starting price: $<input type="number" v-model="startPrice" step="0.1"></li><br>
-          <li>Reserve price: $<input type="number" v-model="reservePrice" step="0.1"></li><br>
+          <li>Auction start date: <input type="date" class="form-control" v-model="startDate" required></li><br>
+          <li>Auction start time: <input type="time" class="form-control" v-model="startTime" required></li><br>
+          <li>Auction end date: <input type="date" class="form-control" v-model="endDate" required></li><br>
+          <li>Auction end time: <input type="time" class="form-control" v-model="endTime" required></li><br>
+          <li>Starting price: $<input type="number" class="form-control" v-model="startPrice" step="0.1"></li><br>
+          <li>Reserve price: $<input type="number" class="form-control" v-model="reservePrice" step="0.1"></li><br>
           <li><button type="button" v-on:click="validateCreateListing()" value="Create Auction">Create Auction</button></li>
         </ul>
       </form>
@@ -217,22 +217,23 @@
                 }
               }
 
-              console.log(typeof(this.startPrice), typeof(this.reservePrice));
               var startPriceCents = Math.round(this.startPrice * 100);
               var reservePriceCents = Math.round(this.reservePrice * 100);
+              console.log(typeof(startPriceCents), typeof(reservePriceCents));
 
               let authToken = localStorage.getItem("authToken");
               this.$http.post("http://localhost:4941/api/v1/auctions",
-                  {
-                    "categoryId": parseInt(categoryId),
-                    "title": this.title,
-                    "description": this.description,
-                    "startDateTime": parseInt(startDateTime),
-                    "endDateTime": parseInt(endDateTime),
-                    "reservePrice": this.reservePrice,
-                    "startingBid": startPriceCents,
-                    "reservePrice": reservePriceCents
-                  },
+                  JSON.stringify(
+                    {
+                      "categoryId": parseInt(categoryId),
+                      "title": this.title,
+                      "description": this.description,
+                      "startDateTime": parseInt(startDateTime),
+                      "endDateTime": parseInt(endDateTime),
+                      "startingBid": startPriceCents,
+                      "reservePrice": reservePriceCents
+                    }
+                  ),
                 {
                   headers: {
                     'X-Authorization': authToken
